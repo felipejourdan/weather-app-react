@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 interface cityWeatherProps {
@@ -21,7 +21,16 @@ function App() {
   const apiKey = '8cc52cce77b83de5cc18604711baf5fd'
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`
 
-  React.useEffect(() => {
+  function getGeoLocationTest() {
+    if ('geolocation' in navigator) {
+      console.log('Available')
+    } else {
+      console.log('Not Available')
+    }
+  }
+
+  useEffect(() => {
+    getGeoLocationTest()
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=lisbon&appid=${apiKey}&units=metric`
@@ -45,7 +54,7 @@ function App() {
       })
   }, [])
 
-  async function getCityStats(event: React.KeyboardEvent) {
+  async function getCityWeather(event: React.KeyboardEvent) {
     if (event?.key === 'Enter') {
       try {
         await axios.get(url).then(res => {
@@ -85,7 +94,7 @@ function App() {
               type="text"
               onChange={({ currentTarget }) => setLocation(currentTarget.value)}
               placeholder="Search, ex: London, GB"
-              onKeyPress={getCityStats}
+              onKeyPress={getCityWeather}
             ></input>
           </div>
           <div className="location">
