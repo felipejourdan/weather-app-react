@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { GlobalStyle } from './Styles/globalStyles'
 import axios from 'axios'
 
 interface cityWeatherProps {
@@ -18,6 +19,8 @@ interface cityWeatherProps {
 function App() {
   const [location, setLocation] = useState('')
   const [searchLocation, setSearchLocation] = useState<cityWeatherProps>()
+  const [loading, setLoading] = useState(false)
+
   const apiKey = '8cc52cce77b83de5cc18604711baf5fd'
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`
 
@@ -86,6 +89,7 @@ function App() {
     <div
       className={'app' + ' ' + searchLocation?.description.replaceAll(' ', '_')}
     >
+      <GlobalStyle />
       <div className="container">
         <div className="top">
           <div className="search">
